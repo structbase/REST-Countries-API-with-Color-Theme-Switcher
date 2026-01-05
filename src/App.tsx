@@ -14,7 +14,6 @@ function App() {
                     path="/country/:{placeholder}"
                     element={<CountryPage />}
                 />
-                //
             </Routes>
         </>
     );
