@@ -1,11 +1,14 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CountryCard from "../../components/CountryCard/CountryCard";
+import RegionFilter from "../../components/RegionFilter/RegionFilter";
 import useFetch from "../../hooks/useFetch";
 import type { CountryApi } from "../../types/country-api";
 import type { CountryDetail } from "../../types/country-detail";
-import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
     const navigate = useNavigate();
+    const [region, setRegion] = useState("");
 
     // Fetch only fields used by CountryCard component
     const { data, loading, error } = useFetch<CountryApi[]>(
@@ -22,19 +25,30 @@ export default function HomePage() {
         code: country.cca3,
         name: country.name.common,
         population: country.population,
+        region: country.region,
         capital: country.capital?.[0] || "",
         flag: country.flags.png,
     }));
 
+    const filteredCountries = region
+        ? countries.filter((c) => c.region === region)
+        : countries;
+
     return (
         <div>
-            {countries.map((country) => (
-                <CountryCard
-                    key={country.code}
-                    country={country}
-                    onClick={() => navigate(`/country/${country.code}`)}
-                />
-            ))}
+            <div className="controls">
+                <RegionFilter value={region} onChange={setRegion} />
+            </div>
+
+            <div className="country-grid">
+                {filteredCountries.map((country) => (
+                    <CountryCard
+                        key={country.code}
+                        country={country}
+                        onClick={() => navigate(`/country/${country.code}`)}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
