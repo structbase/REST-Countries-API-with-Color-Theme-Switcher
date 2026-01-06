@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 
 // Generic data-fetching hook for API requests
-export default function useFetch<T>(url: string) {
+export default function useFetch<T>(url: string | null) {
     // Store fetched data, loading state, and any errors
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
+        // If no URL, don't fetch
+        if (!url) {
+            setLoading(false);
+            setData(null);
+            setError(null);
+            return;
+        }
+
         // AbortController allows us to cancel the request on unmount
         const controller = new AbortController();
         let isMounted = true;

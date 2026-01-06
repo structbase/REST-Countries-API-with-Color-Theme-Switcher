@@ -1,24 +1,37 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import type { CountryApi } from "../../types/country-api";
+import "./CountryPage.css";
 
 export default function CountryPage() {
-    // Retrieve the unique alpha code from URL parameters
     const { code } = useParams<{ code: string }>();
+    const navigate = useNavigate();
 
-    // Fetch specific country data using the alpha code endpoint
+    // Fetch main country data
     const { data, loading, error } = useFetch<CountryApi[]>(
-        code ? `https://restcountries.com/v3.1/alpha/${code}` : ""
+        code ? `https://restcountries.com/v3.1/alpha/${code}` : null
     );
 
-    // Handle loading, error, and empty data states
+    // Get border codes from the fetched country data (before early returns)
+    const borderCodes =
+        data && data.length > 0 && data[0].borders
+            ? data[0].borders.join(",")
+            : null;
+
+    // Fetch border country names (must be called at top level)
+    const { data: borderCountries } = useFetch<CountryApi[]>(
+        borderCodes
+            ? `https://restcountries.com/v3.1/alpha?codes=${borderCodes}&fields=name,cca3`
+            : null
+    );
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
     if (!data || data.length === 0) return <p>No data found</p>;
 
     const country = data[0];
 
-    // Normalize API data into a flat structure with safe fallbacks
+    // Normalize country data
     const countryDetail = {
         name: country.name.common,
         nativeName: country.name.nativeName
@@ -42,36 +55,81 @@ export default function CountryPage() {
     };
 
     return (
-        <div>
-            <img src={countryDetail.flag} alt={countryDetail.name} />
-            <h1>{countryDetail.name}</h1>
+        <div className="country-page">
+            <button className="back-button" onClick={() => navigate(-1)}>
+                ← Back
+            </button>
 
-            <p>
-                <strong>Native Name:</strong> {countryDetail.nativeName}
-            </p>
-            <p>
-                <strong>Population:</strong>{" "}
-                {countryDetail.population.toLocaleString()}
-            </p>
-            <p>
-                <strong>Region:</strong> {countryDetail.region}
-            </p>
-            <p>
-                <strong>Sub Region:</strong> {countryDetail.subRegion}
-            </p>
-            <p>
-                <strong>Capital:</strong> {countryDetail.capital}
-            </p>
-            <p>
-                <strong>Top Level Domain:</strong>{" "}
-                {countryDetail.topLevelDomain}
-            </p>
-            <p>
-                <strong>Currencies:</strong> {countryDetail.currencies}
-            </p>
-            <p>
-                <strong>Languages:</strong> {countryDetail.languages}
-            </p>
+            <div className="country-details">
+                <div className="flag-container">
+                    <img src={countryDetail.flag} alt={countryDetail.name} />
+                </div>
+
+                <div className="country-info">
+                    <h1>{countryDetail.name}</h1>
+
+                    <div className="info-columns">
+                        <div>
+                            <p>
+                                <strong>Native Name:</strong>{" "}
+                                {countryDetail.nativeName}
+                            </p>
+                            <p>
+                                <strong>Population:</strong>{" "}
+                                {countryDetail.population.toLocaleString()}
+                            </p>
+                            <p>
+                                <strong>Region:</strong> {countryDetail.region}
+                            </p>
+                            <p>
+                                <strong>Sub Region:</strong>{" "}
+                                {countryDetail.subRegion}
+                            </p>
+                            <p>
+                                <strong>Capital:</strong>{" "}
+                                {countryDetail.capital}
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <strong>Top Level Domain:</strong>{" "}
+                                {countryDetail.topLevelDomain}
+                            </p>
+                            <p>
+                                <strong>Currencies:</strong>{" "}
+                                {countryDetail.currencies}
+                            </p>
+                            <p>
+                                <strong>Languages:</strong>{" "}
+                                {countryDetail.languages}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="borders-container">
+                        <p>
+                            <strong>Border Countries:</strong>
+                        </p>
+                        <div className="borders">
+                            {borderCountries && borderCountries.length > 0 ? (
+                                borderCountries.map((border) => (
+                                    <button
+                                        key={border.cca3}
+                                        className="border-btn"
+                                        onClick={() =>
+                                            navigate(`/country/${border.cca3}`)
+                                        }
+                                    >
+                                        {border.name.common}
+                                    </button>
+                                ))
+                            ) : (
+                                <span>None</span>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
