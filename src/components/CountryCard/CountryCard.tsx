@@ -2,7 +2,7 @@ import type { CountryCardProps } from "../../types/country-card-props";
 
 export default function CountryCard({ country, onClick }: CountryCardProps) {
     return (
-        <div className="country-card" onClick={onClick}>
+        <div onClick={onClick}>
             <img src={country.flag} alt={`Flag of ${country.name}`} />
             <h2>{country.name}</h2>
             <p>

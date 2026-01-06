@@ -3,3 +3,11 @@ body {
   min-height: 100vh;
   background-color: #f8f9fa;
 }
+
+/* index.css or App.css */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap');
+
+html,
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
