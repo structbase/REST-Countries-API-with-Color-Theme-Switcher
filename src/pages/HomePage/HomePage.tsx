@@ -1,9 +1,12 @@
 import CountryCard from "../../components/CountryCard/CountryCard";
 import useFetch from "../../hooks/useFetch";
-import type { CountryApi } from "../../types/countryApi";
-import type { CountryDetail } from "../../types/country";
+import type { CountryApi } from "../../types/country-api";
+import type { CountryDetail } from "../../types/country-detail";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+    const navigate = useNavigate();
+    
     // Fetch all countries with specific fields to minimize payload size
     const { data, loading, error } = useFetch<CountryApi[]>(
         "https://restcountries.com/v3.1/all?fields=name,flags,region,population,capital,cca3,borders"
@@ -42,7 +45,11 @@ export default function HomePage() {
     return (
         <div>
             {countries.map((country) => (
-                <CountryCard key={country.code} country={country} />
+                <CountryCard
+                    key={country.code}
+                    country={country}
+                    onClick={() => navigate(`/country/${country.code}`)}
+                />
             ))}
         </div>
     );
