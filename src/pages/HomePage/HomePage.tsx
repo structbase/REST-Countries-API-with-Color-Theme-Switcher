@@ -6,6 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import type { CountryApi } from "../../types/country-api";
 import type { CountryDetail } from "../../types/country-detail";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import "./HomePage.css"
 
 export default function HomePage() {
     const navigate = useNavigate();
