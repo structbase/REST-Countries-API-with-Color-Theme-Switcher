@@ -1,0 +1,22 @@
+.region-filter {
+    width: 200px;
+}
+
+.region-filter select {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+
+    background-color: var(--elements);
+    color: var(--text);
+
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.05);
+}
+
+.region-filter select:focus {
+    outline: none;
+}
