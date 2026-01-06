@@ -1,0 +1,39 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    background-color: var(--element);
+    color: var(--text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar a {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: inherit;
+}
+
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: inherit;
+}
+
+
+.icon-size {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.theme-toggle-btn{
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
