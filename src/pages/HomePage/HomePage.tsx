@@ -40,7 +40,7 @@ export default function HomePage() {
         );
 
     return (
-        <div>
+        <div className="wrapper">
             <div className="controls">
                 <SearchBar value={search} onChange={setSearch} />
                 <RegionFilter value={region} onChange={setRegion} />
