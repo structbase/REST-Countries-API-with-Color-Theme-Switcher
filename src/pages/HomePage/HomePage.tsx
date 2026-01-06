@@ -5,10 +5,13 @@ import RegionFilter from "../../components/RegionFilter/RegionFilter";
 import useFetch from "../../hooks/useFetch";
 import type { CountryApi } from "../../types/country-api";
 import type { CountryDetail } from "../../types/country-detail";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 export default function HomePage() {
     const navigate = useNavigate();
+
     const [region, setRegion] = useState("");
+    const [search, setSearch] = useState("");
 
     // Fetch only fields used by CountryCard component
     const { data, loading, error } = useFetch<CountryApi[]>(
@@ -18,7 +21,7 @@ export default function HomePage() {
     // Handle loading, error, and empty data states
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
-    if (!data || data.length === 0) return <p>No data found</p>;
+    if (!data) return <p>No data found</p>;
 
     // Transform API data to only include fields used by CountryCard
     const countries: CountryDetail[] = data.map((country) => ({
@@ -30,13 +33,16 @@ export default function HomePage() {
         flag: country.flags.png,
     }));
 
-    const filteredCountries = region
-        ? countries.filter((c) => c.region === region)
-        : countries;
+    const filteredCountries = countries
+        .filter((c) => (region ? c.region === region : true))
+        .filter((c) =>
+            search ? c.name.toLowerCase().includes(search.toLowerCase()) : true
+        );
 
     return (
         <div>
             <div className="controls">
+                <SearchBar value={search} onChange={setSearch} />
                 <RegionFilter value={region} onChange={setRegion} />
             </div>
 
