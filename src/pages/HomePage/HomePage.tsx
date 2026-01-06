@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
     const navigate = useNavigate();
-    
-    // Fetch all countries with specific fields to minimize payload size
+
+    // Fetch only fields used by CountryCard component
     const { data, loading, error } = useFetch<CountryApi[]>(
-        "https://restcountries.com/v3.1/all?fields=name,flags,region,population,capital,cca3,borders"
+        "https://restcountries.com/v3.1/all?fields=name,flags,region,population,capital,cca3"
     );
 
     // Handle loading, error, and empty data states
@@ -17,29 +17,13 @@ export default function HomePage() {
     if (error) return <p>Error: {error.message}</p>;
     if (!data || data.length === 0) return <p>No data found</p>;
 
-    // Transform raw API data into our internal CountryDetail shape
-    // Includes fallback logic for potentially missing nested properties
+    // Transform API data to only include fields used by CountryCard
     const countries: CountryDetail[] = data.map((country) => ({
         code: country.cca3,
         name: country.name.common,
-        nativeName: country.name.nativeName
-            ? Object.values(country.name.nativeName)[0]?.common || ""
-            : "",
         population: country.population,
-        region: country.region,
-        subRegion: country.subregion || "",
         capital: country.capital?.[0] || "",
-        topLevelDomain: country.tld?.[0] || "",
-        currencies: country.currencies
-            ? Object.values(country.currencies)
-                    .map((c) => c.name)
-                    .join(", ")
-            : "",
-        languages: country.languages
-            ? Object.values(country.languages).join(", ")
-            : "",
         flag: country.flags.png,
-        borders: country.borders || [],
     }));
 
     return (

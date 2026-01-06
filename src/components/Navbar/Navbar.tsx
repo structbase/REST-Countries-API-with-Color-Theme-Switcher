@@ -4,7 +4,6 @@ export default function Navbar() {
     return (
         <div>
             <Link to="/">Home</Link>
-            <Link to="/countrypage">Country Page</Link>
         </div>
     );
 }
