@@ -1,9 +1,11 @@
+/* Container: Handles page width and centering across the app */
 .wrapper {
     padding: 3rem 1rem;
     max-width: 1280px;
     margin: 0 auto;
 }
 
+/* Controls: Stacks the search bar and filter vertically for mobile */
 .controls {
     display: flex;
     flex-direction: column;
@@ -11,6 +13,7 @@
     margin-bottom: 3rem;
 }
 
+/* Tablet/Desktop: Increases horizontal padding and aligns controls in a row */
 @media (min-width: 768px) {
     .wrapper {
         padding: 3rem 5rem;
@@ -23,12 +26,14 @@
     }
 }
 
+/* Grid System: Sets up a single-column layout for small mobile screens */
 .country-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2.5rem;
 }
 
+/* Responsive Breakpoints: Incrementally adds columns as the screen gets wider */
 @media (min-width: 640px) {
     .country-grid {
         grid-template-columns: repeat(2, 1fr);

@@ -1,9 +1,11 @@
+/* Container: Sets a fixed maximum width for the dropdown menu */
 .region-filter {
     width: 100%;
     max-width: 200px;
     position: relative;
 }
 
+/* Select Input: Styles the dropdown, applies theme variables, and adds a custom arrow icon */
 .region-filter select {
     width: 100%;
     padding: 1rem 1.5rem;
@@ -17,6 +19,8 @@
     color: var(--text);
     box-shadow: 0 2px 9px rgba(0, 0, 0, 0.05);
     transition: background-color 0.3s ease, color 0.3s ease;
+
+    /* Custom Arrow: Removes default browser styling and injects an SVG arrow */
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23000' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -25,15 +29,18 @@
     padding-right: 3rem;
 }
 
+/* Focus State: Enhances shadow depth for better visual feedback */
 .region-filter select:focus {
     outline: none;
     box-shadow: 0 2px 9px rgba(0, 0, 0, 0.1);
 }
 
+/* Dark Mode: Replaces the black arrow icon with a white version for contrast */
 [data-theme="dark"] .region-filter select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
 }
 
+/* Desktop: Adjusts vertical padding for a taller, more modern look */
 @media (min-width: 768px) {
     .region-filter select {
         font-size: 0.875rem;

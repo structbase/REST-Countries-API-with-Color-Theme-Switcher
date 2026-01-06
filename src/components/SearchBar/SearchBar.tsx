@@ -1,6 +1,10 @@
 import type { SearchBarProps } from "../../types/search-bar-props";
-import "./SearchBar.css"
+import "./SearchBar.css";
 
+/**
+ * SearchBar Component:
+ * A controlled text input used to filter the country list by name.
+ */
 export default function SearchBar({ value, onChange }: SearchBarProps) {
     return (
         <div className="search-container">

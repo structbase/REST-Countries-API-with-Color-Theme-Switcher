@@ -3,9 +3,13 @@ interface ThemeIconProps {
     className?: string;
 }
 
+/**
+ * ThemeIcon Component:
+ * Toggles between a Moon (Dark Mode) and Sun (Light Mode) SVG.
+ */
 export const ThemeIcon = ({ dark, className }: ThemeIconProps) => {
     return dark ? (
-        // Moon icon
+        // Moon icon: Uses a solid fill for a prominent dark-mode look
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -19,7 +23,7 @@ export const ThemeIcon = ({ dark, className }: ThemeIconProps) => {
             />
         </svg>
     ) : (
-        // Sun icon
+        // Sun icon: Uses a stroke-based outline for light mode
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

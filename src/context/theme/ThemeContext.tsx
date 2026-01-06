@@ -1,3 +1,4 @@
+/* Context definition: sets up the structure for theme state and the toggle function */
 import { createContext } from "react";
 
 export type Theme = "light" | "dark";

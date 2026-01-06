@@ -1,3 +1,4 @@
+/* Main navigation bar: uses flexbox for spacing and applies theme colors */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -8,6 +9,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Logo/Title link styling */
 .navbar-title {
     text-decoration: none;
     font-weight: 800;
@@ -16,6 +18,7 @@
     transition: color 0.3s ease;
 }
 
+/* Theme switcher button: removes default styles and aligns icon/text */
 .theme-toggle-btn {
     background: none;
     border: none;
@@ -35,11 +38,13 @@
     opacity: 0.8;
 }
 
+/* Fixed dimensions for the theme toggle icon */
 .icon-size {
     width: 1rem;
     height: 1rem;
 }
 
+/* Tablet/Desktop: increases padding and font sizes for larger screens */
 @media (min-width: 768px) {
     .navbar {
         padding: 1.875rem 5rem;

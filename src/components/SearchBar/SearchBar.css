@@ -1,9 +1,11 @@
+/* Container: Defines search box width and provides a positioning context for the icon */
 .search-container {
     width: 100%;
     max-width: 480px;
     position: relative;
 }
 
+/* Input Field: Handles theme colors, internal spacing for the icon, and box shadows */
 .search-input {
     width: 100%;
     padding: 1rem 1rem 1rem 4rem;
@@ -27,6 +29,7 @@
     box-shadow: 0 2px 9px rgba(0, 0, 0, 0.1);
 }
 
+/* Search Icon: Injects a decorative magnifying glass using a pseudo-element */
 .search-container::before {
     content: "🔍";
     position: absolute;
@@ -35,8 +38,10 @@
     transform: translateY(-50%);
     font-size: 1rem;
     pointer-events: none;
+    /* Allows clicks to pass through to the input */
 }
 
+/* Tablet/Desktop: Increases padding and shifts icon position for a roomier feel */
 @media (min-width: 768px) {
     .search-input {
         font-size: 0.875rem;

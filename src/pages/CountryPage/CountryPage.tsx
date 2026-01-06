@@ -7,31 +7,32 @@ export default function CountryPage() {
     const { code } = useParams<{ code: string }>();
     const navigate = useNavigate();
 
-    // Fetch main country data
+    // Primary Data Fetch: Gets full details for the specific country code in the URL
     const { data, loading, error } = useFetch<CountryApi[]>(
         code ? `https://restcountries.com/v3.1/alpha/${code}` : null
     );
 
-    // Get border codes from the fetched country data (before early returns)
+    // Derived State: Extracts border country codes to trigger the second fetch
     const borderCodes =
         data && data.length > 0 && data[0].borders
             ? data[0].borders.join(",")
             : null;
 
-    // Fetch border country names (must be called at top level)
+    // Secondary Data Fetch: Translates border alpha codes into readable common names
     const { data: borderCountries } = useFetch<CountryApi[]>(
         borderCodes
             ? `https://restcountries.com/v3.1/alpha?codes=${borderCodes}&fields=name,cca3`
             : null
     );
 
+    // Early returns for async lifecycle states
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
     if (!data || data.length === 0) return <p>No data found</p>;
 
     const country = data[0];
 
-    // Normalize country data
+    // Normalization: Cleans up API response into a flat object with fallbacks
     const countryDetail = {
         name: country.name.common,
         nativeName: country.name.nativeName
@@ -56,6 +57,7 @@ export default function CountryPage() {
 
     return (
         <div className="country-page">
+            {/* Navigation: History-aware back button */}
             <button className="back-button" onClick={() => navigate(-1)}>
                 ← Back
             </button>
@@ -69,6 +71,7 @@ export default function CountryPage() {
                     <h1>{countryDetail.name}</h1>
 
                     <div className="info-columns">
+                        {/* Primary info block */}
                         <div>
                             <p>
                                 <strong>Native Name:</strong>{" "}
@@ -90,6 +93,7 @@ export default function CountryPage() {
                                 {countryDetail.capital}
                             </p>
                         </div>
+                        {/* Secondary info block */}
                         <div>
                             <p>
                                 <strong>Top Level Domain:</strong>{" "}
@@ -106,6 +110,7 @@ export default function CountryPage() {
                         </div>
                     </div>
 
+                    {/* Border Countries: Renders navigation buttons for neighboring nations */}
                     <div className="borders-container">
                         <p>
                             <strong>Border Countries:</strong>
