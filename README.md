@@ -243,12 +243,12 @@ const { data: borderCountries } = useFetch<CountryApi[]>(
 ### 🍽️ Challenge By 
 -   [**Frontend Mentor** – Challenge Provider](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca)
 
-### 🍽️ API Provider
+### API Provider
 
 -   [**REST Countries API** – API Provider](https://restcountries.com/)
 
-### 
--   [**Netlify** – API Provider](https://restcountries.com/)
+### Host Provider
+-   [**Netlify** – Hosting Provider](https://restcountries.com/)
 
 ---
 
